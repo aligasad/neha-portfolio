@@ -33,7 +33,7 @@ export function HeroSection() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <a
-                href="/assets/Neha-Resume.pdf"
+                href="nehaRes.pdf"
                 download
                 target="_blank"
                 rel="noopener noreferrer"
@@ -66,7 +66,7 @@ export function HeroSection() {
             <div className="relative">
               <div className="w-80 h-100 rounded-full bg-gradient-to-br from-primary/20 via-secondary/30 to-accent/20 flex items-center justify-center">
                 <Image
-                  src="/neha1.jpg" // public folder ke andar ka path
+                  src="/neha1.jpg"
                   alt="Neha Rawat"
                   width={250}
                   height={250}
