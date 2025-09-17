@@ -1,6 +1,6 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Mail, Linkedin, MapPin } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Mail, Linkedin, MapPin } from "lucide-react";
 
 export function ContactSection() {
   const contactInfo = [
@@ -14,7 +14,7 @@ export function ContactSection() {
       icon: Linkedin,
       label: "LinkedIn",
       value: "Neha Rawat LinkedIn",
-      href: "#",
+      href: "https://www.linkedin.com/in/neha-rawat-170877284",
     },
     {
       icon: MapPin,
@@ -22,16 +22,19 @@ export function ContactSection() {
       value: "Lucknow, India",
       href: "#",
     },
-  ]
+  ];
 
   return (
     <section id="contact" className="py-20 bg-muted/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">Get In Touch</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
+            Get In Touch
+          </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto text-pretty">
-            I'm always interested in discussing research opportunities, collaborations, or connecting with fellow
-            biotechnology enthusiasts. Let's start a conversation!
+            I'm always interested in discussing research opportunities,
+            collaborations, or connecting with fellow biotechnology enthusiasts.
+            Let's start a conversation!
           </p>
         </div>
 
@@ -46,11 +49,20 @@ export function ContactSection() {
                   <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
                     <contact.icon className="h-6 w-6 text-primary" />
                   </div>
-                  <h3 className="font-semibold text-foreground mb-2">{contact.label}</h3>
-                  <p className="text-muted-foreground text-sm mb-4">{contact.value}</p>
+                  <h3 className="font-semibold text-foreground mb-2">
+                    {contact.label}
+                  </h3>
+                  <p className="text-muted-foreground text-sm mb-4">
+                    {contact.value}
+                  </p>
                   {contact.href !== "#" && (
                     <Button variant="outline" size="sm" asChild>
-                      <a href={contact.href} target={contact.href.startsWith("http") ? "_blank" : undefined}>
+                      <a
+                        href={contact.href}
+                        target={
+                          contact.href.startsWith("http") ? "_blank" : undefined
+                        }
+                      >
                         Connect
                       </a>
                     </Button>
@@ -63,10 +75,13 @@ export function ContactSection() {
           <div className="text-center">
             <Card className="border-border/50 bg-primary/5">
               <CardContent className="p-8">
-                <h3 className="text-2xl font-bold text-foreground mb-4">Ready to Collaborate?</h3>
+                <h3 className="text-2xl font-bold text-foreground mb-4">
+                  Ready to Collaborate?
+                </h3>
                 <p className="text-muted-foreground mb-6 max-w-2xl mx-auto text-pretty">
-                  Whether you're looking for a dedicated researcher, have an exciting project in mind, or simply want to
-                  discuss the latest developments in biotechnology, I'd love to hear from you.
+                  Whether you're looking for a dedicated researcher, have an
+                  exciting project in mind, or simply want to discuss the latest
+                  developments in biotechnology, I'd love to hear from you.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button size="lg" className="gap-2" asChild>
@@ -75,9 +90,15 @@ export function ContactSection() {
                       Send Email
                     </a>
                   </Button>
-                  <Button variant="outline" size="lg" className="gap-2 bg-transparent">
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="gap-2 bg-transparent"
+                  >
                     <Linkedin className="h-5 w-5" />
-                    LinkedIn Message
+                    <a href="https://www.linkedin.com/in/neha-rawat-170877284">
+                      LinkedIn Message
+                    </a>
                   </Button>
                 </div>
               </CardContent>
@@ -86,5 +107,5 @@ export function ContactSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
