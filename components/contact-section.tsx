@@ -1,6 +1,10 @@
+"use client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Mail, Linkedin, MapPin } from "lucide-react";
+import { Mail, Linkedin, MapPin, Send } from "lucide-react";
+import { FormEvent, useState } from "react";
+import { Textarea } from "./ui/textarea";
+import { Input } from "./ui/input";
 
 export function ContactSection() {
   const contactInfo = [
@@ -24,9 +28,56 @@ export function ContactSection() {
     },
   ];
 
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+    const submittedData = new FormData(form); // ✅ renamed to avoid shadowing
+
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        access_key: "8147a359-7f04-4564-9330-a6974b04b66e",
+        name: submittedData.get("name"),
+        email: submittedData.get("email"),
+        message: submittedData.get("message"),
+      }),
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      console.log("✅ Success:", result);
+      form.reset();
+      setFormData({ name: "", email: "", message: "" }); // ✅ clear state too
+    } else {
+      console.error("❌ Error:", result);
+    }
+  };
+
   return (
     <section id="contact" className="py-20 bg-muted/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
             Get In Touch
@@ -39,6 +90,7 @@ export function ContactSection() {
         </div>
 
         <div className="max-w-4xl mx-auto">
+          {/* Contact Info Cards */}
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             {contactInfo.map((contact, index) => (
               <Card
@@ -62,6 +114,7 @@ export function ContactSection() {
                         target={
                           contact.href.startsWith("http") ? "_blank" : undefined
                         }
+                        rel="noopener noreferrer"
                       >
                         Connect
                       </a>
@@ -72,7 +125,8 @@ export function ContactSection() {
             ))}
           </div>
 
-          <div className="text-center">
+          {/* Call to Action */}
+          <div className="text-center mb-12">
             <Card className="border-border/50 bg-primary/5">
               <CardContent className="p-8">
                 <h3 className="text-2xl font-bold text-foreground mb-4">
@@ -94,9 +148,14 @@ export function ContactSection() {
                     variant="outline"
                     size="lg"
                     className="gap-2 bg-transparent"
+                    asChild
                   >
-                    <Linkedin className="h-5 w-5" />
-                    <a href="https://www.linkedin.com/in/neha-rawat-170877284">
+                    <a
+                      href="https://www.linkedin.com/in/neha-rawat-170877284"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Linkedin className="h-5 w-5" />
                       LinkedIn Message
                     </a>
                   </Button>
@@ -104,6 +163,71 @@ export function ContactSection() {
               </CardContent>
             </Card>
           </div>
+
+          {/* Contact Form */}
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-card-foreground mb-2"
+              >
+                Full Name
+              </label>
+              <Input
+                id="name"
+                name="name"
+                type="text"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                className="bg-input border-border focus:ring-2 focus:ring-accent focus:border-accent rounded-lg"
+                placeholder="Your full name"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-card-foreground mb-2"
+              >
+                Email Address
+              </label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                className="bg-input border-border focus:ring-2 focus:ring-accent focus:border-accent rounded-lg"
+                placeholder="your.email@example.com"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="message"
+                className="block text-sm font-medium text-card-foreground mb-2"
+              >
+                Message
+              </label>
+              <Textarea
+                id="message"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                required
+                rows={5}
+                className="bg-input border-border focus:ring-2 focus:ring-accent focus:border-accent rounded-lg resize-none"
+                placeholder="Tell me about your project or inquiry..."
+              />
+            </div>
+            <Button
+              type="submit"
+              className="w-full bg-gradient-to-r from-accent to-primary hover:opacity-90 text-white font-semibold py-3 rounded-lg shadow-lg transition-all"
+            >
+              <Send className="w-4 h-4 mr-2" />
+              Send Message
+            </Button>
+          </form>
         </div>
       </div>
     </section>
